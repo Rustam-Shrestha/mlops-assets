@@ -382,4 +382,77 @@ Each provides:
 
 ---
 
+1. Writing Maintainable ML Code
+Project Structure
 
+    Logical organization of files into directories: data, models, notebooks, source.
+
+    Use of README.md for repository overview and onboarding.
+
+    Subdivision of data/ into raw, processed, and interim formats.
+
+    Clear naming conventions for traceability and modularity.
+
+Code Versioning
+
+    Use of version control systems (e.g., Git) to track changes and enable rollback.
+
+    Facilitates parallel development and debugging.
+
+    Supports reproducibility and collaborative workflows.
+
+Documentation Practices
+
+    Purpose-driven documentation of files, functions, and deployment steps.
+
+    Enhances code usability, onboarding, and long-term maintainability.
+
+    Critical for understanding project structure and operational logic.
+
+Writing Effective ML Documentation
+Documentation Scope
+
+    Six key areas: data sources, data schemas, labeling methods, model experimentation and selection, training environments, model pseudocode.
+
+Data Sources
+
+    Tracks origin, accessibility, and quality of datasets.
+
+    Supports error detection and iterative data improvement.
+
+Data Schemas
+
+    Defines structure of input data (e.g., tables, fields, relationships).
+
+    Improves transparency and informs downstream processing.
+
+Labeling Methods
+
+    Documents annotation strategies for supervised tasks.
+
+    Enables reproducibility and quality assessment of labels.
+
+    Supports model reliability and evolution of labeling pipelines.
+
+Model Pseudocode
+
+    Abstract representation of model logic, feature engineering, and input-output structure.
+
+    Useful for debugging, auditing, and onboarding.
+
+Model Experimentation and Selection
+
+    Records model architectures, metrics, and hyperparameter configurations.
+
+    Enables reproducibility and iterative refinement.
+
+    Supports decision traceability and collaborative improvement.
+
+Training Environments
+
+    Captures software dependencies, package versions, and random seeds.
+
+    Ensures consistency between training and deployment.
+
+    Critical for reproducing results and diagnosing discrepancies.
+    
