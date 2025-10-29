@@ -703,3 +703,103 @@ This covers feature engineering (aggregation, construction, transformation, sele
 
 ---
 
+
+
+#  SHAP Explainability Showcase: Insurance & Heart Disease Models
+
+This documentation demonstrates how to apply SHAP for both global and local model explainability using Random Forest, KNN, and neural network models. It includes feature importance plots, beeswarm plots, partial dependence plots, and waterfall plots — all wrapped in clean, reproducible code.
+
+---
+
+##  1. Insurance Dataset: Random Forest Regressor
+
+```python
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import OneHotEncoder
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.compose import ColumnTransformer
+from sklearn.pipeline import Pipeline
+
+# Load dataset
+df = pd.read_csv("insurance.csv")
+X = df.drop("charges", axis=1)
+y = df["charges"]
+
+# Preprocessing
+categorical_cols = ["sex", "smoker"]
+numerical_cols = ["age", "bmi", "children"]
+
+preprocessor = ColumnTransformer([
+    ("cat", OneHotEncoder(drop="first"), categorical_cols),
+    ("num", "passthrough", numerical_cols)
+])
+
+# Pipeline
+model = Pipeline([
+    ("preprocessor", preprocessor),
+    ("regressor", RandomForestRegressor(random_state=42))
+])
+
+# Train-test split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+model.fit(X_train, y_train)
+
+```import shap
+
+# TreeExplainer for Random Forest
+explainer = shap.TreeExplainer(model.named_steps["regressor"])
+X_transformed = model.named_steps["preprocessor"].transform(X)
+shap_values = explainer.shap_values(X_transformed)
+
+# Feature importance plot
+shap.summary_plot(shap_values, X_transformed, plot_type="bar")
+
+# Beeswarm plot
+shap.summary_plot(shap_values, X_transformed, plot_type="dot")
+```
+
+```shap.partial_dependence_plot(
+    "age",
+    model.predict,
+    X,
+    model_expected_value=explainer.expected_value,
+    feature_names=X.columns
+)
+```
+```from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+
+df = pd.read_csv("heart.csv")
+X = df.drop("target", axis=1)
+y = df["target"]
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+scaler = StandardScaler()
+X_train_scaled = scaler.fit_transform(X_train)
+X_test_scaled = scaler.transform(X_test)
+
+knn = KNeighborsClassifier(n_neighbors=5)
+knn.fit(X_train_scaled, y_train)
+```
+
+```# KernelExplainer for KNN
+explainer = shap.KernelExplainer(knn.predict_proba, shap.kmeans(X_train_scaled, 10).data)
+
+# Select one instance
+test_instance = X_test_scaled[0]
+shap_values = explainer.shap_values(test_instance)
+
+# Waterfall plot for class 1
+shap.waterfall_plot(
+    shap.Explanation(
+        values=shap_values[1],
+        base_values=explainer.expected_value[1],
+        data=test_instance,
+        feature_names=X.columns
+    )
+)
+```
+
+
