@@ -24,3 +24,5 @@ data/
 
 jupyterenv/
 mlruns/
+/animal_clf_dataset
+

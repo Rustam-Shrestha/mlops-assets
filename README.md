@@ -803,3 +803,48 @@ shap.waterfall_plot(
 ```
 
 
+## 1. XGBoost Hyperparameter Prioritization
+- Explored which parameters most impact accuracy in `XGBClassifier`.
+- Prioritized tuning order:
+  1. `max_depth`
+  2. `n_estimators`
+  3. `learning_rate`
+  4. `subsample`
+  5. `colsample_bytree`
+- Recommended values:
+  - `max_depth`: 6, 8, 10
+  - `n_estimators`: 200–500
+  - `learning_rate`: 0.03–0.1
+  - `subsample`: 0.8
+  - `colsample_bytree`: 0.8
+
+## 2. LIME for Image Classification
+- Used `LimeImageExplainer` to interpret image classifier predictions.
+- Corrected usage:
+  - `classifier_fn` must be a callable, not a string.
+  - Replaced `get_image_mask` with `get_image_and_mask`.
+- Visualized superpixel-based explanations using `mark_boundaries`.
+
+## 3. Faithfulness Metric
+- Measured how much changing an important feature affects prediction.
+- Workflow:
+  - Get original prediction.
+  - Modify a key feature (e.g., `gender`).
+  - Get new prediction.
+  - Compute `faithfulness_score = abs(new - original)`.
+
+## 4. Consistency Metric with SHAP
+- Compared feature importances across models trained on different data splits.
+- Used cosine similarity to measure consistency:
+  ```python
+  consistency = cosine_similarity([importance1], [importance2])[0][0]
+## 5. Explainability in Image trained model and in NLP mpdel 
+
+cat dog classifier and sentiment analysis
+
+
+## 6. K means clustering with its explainabliity (unsupervised learnign
+
+2 types of explaomability
+
+
