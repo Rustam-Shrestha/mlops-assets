@@ -936,3 +936,118 @@ Compare model coefficients with SHAP-based feature impact.
 
 Use SHAP values for one class (e.g., `shap_values[1]`) and compute mean across samples to get shape (n_features,).
 
+
+
+# Modern MLOps Framework: Comprehensive Notes
+
+## 1. What is MLOps?
+MLOps (Machine Learning Operations) is a set of principles, practices, and tools that automate and streamline the lifecycle of ML models—from development to deployment and beyond.
+
+### Key Goals:
+- Automation
+- Reproducibility
+- Monitoring
+- Integration with IT systems
+
+---
+
+## 2. ML Life Cycles
+
+### Types:
+- **ML Project Life Cycle**: Solving a business problem using ML.
+- **ML Application Life Cycle**: The full software system that uses ML models.
+- **ML Model Life Cycle**: The lifecycle of the trained model itself.
+
+### Analogy:
+- ML Application = Car  
+- ML Model = Tires (replaced frequently)
+
+### Model Life Cycle Stages:
+1. Deployment
+2. Monitoring
+3. Decommissioning
+4. Archiving (for reproducibility)
+
+---
+
+## 3. ML Model vs ML Application
+
+| ML Model Components     | ML Application Components         |
+|-------------------------|-----------------------------------|
+| Features                | Database                          |
+| Hyperparameters         | GUI (Graphical User Interface)    |
+| Estimator               | API (Application Programming Interface) |
+
+- **Monolithic**: Model embedded in app
+- **Microservice**: Model and app are decoupled
+
+---
+
+## 4. MLOps Core Components
+
+### General Concepts:
+- **Workflow**: Sequence of tasks
+- **Pipeline**: Automated workflow
+- **Artifact**: Output of a pipeline
+
+### ML-Specific Components:
+- **Feature Store**: Stores processed variables
+- **Model Registry**: Stores and versions trained models
+- **Metadata Store**: Stores training parameters, datasets, etc.
+
+---
+
+## 5. Deployment-Driven Development
+
+### Key Concerns:
+1. **Infrastructure Compatibility**: Know the target platform early.
+2. **Transparency & Reproducibility**: Use versioned datasets and pipelines.
+3. **Input Validation**: Use data profiles and expectations.
+4. **Monitoring**: Log inputs and predictions.
+5. **Debugging**: Use structured logging.
+6. **Testing**: Unit, integration, load, stress, and deployment tests.
+
+---
+
+## 6. Data Profiling, Versioning, and Feature Stores
+
+### Data Profiling:
+- Generates expectations for input validation and drift detection.
+- Tool: `great_expectations`
+
+### Data Versioning:
+- Tracks dataset versions and fingerprints.
+- Tool: `DVC`
+
+### Feature Stores:
+- Central DB for ML-ready features.
+- Prevents training-serving skew.
+- Dual DB architecture: batch (training) + real-time (inference)
+
+---
+
+## 7. Model Build Pipelines in CI/CD
+
+### Two Pipelines:
+1. **App Build Pipeline**: Standard DevOps
+2. **Model Build Pipeline**: Trains and packages models
+
+### Model Build Pipeline Must:
+- Produce full deployment artifacts
+- Ensure reproducibility (code + data versioning)
+- Enable monitoring (via data profiling)
+- Integrate with CI/CD to enforce discipline
+
+---
+
+## 8. Summary Table
+
+| Component               | Purpose                                         | Tools/Practices                     |
+|------------------------|--------------------------------------------------|-------------------------------------|
+| Model Build Pipeline    | Train and package models                        | CI/CD, versioning, metadata         |
+| Data Profiling          | Validate inputs, detect drift                   | great_expectations                  |
+| Data Versioning         | Ensure reproducibility                          | DVC                                 |
+| Feature Store           | Reuse features, prevent skew                    | Dual DB architecture                |
+| Monitoring              | Track performance and behavior                  | Logging, data profiles              |
+| Testing                 | Ensure safe code changes                        | Unit, integration, deployment tests |
+
