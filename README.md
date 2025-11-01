@@ -1051,3 +1051,253 @@ MLOps (Machine Learning Operations) is a set of principles, practices, and tools
 | Monitoring              | Track performance and behavior                  | Logging, data profiles              |
 | Testing                 | Ensure safe code changes                        | Unit, integration, deployment tests |
 
+# MLOps Deployment and Monitoring Notes
+
+## Model Packaging
+
+Model packaging marks the transition from ML development to operations. It must support:
+
+- Smooth deployment
+- Reproducibility
+- Monitoring
+
+### Storage Formats
+
+- **PMML**: Cross-platform, but hard to customize.
+- **Pickle**: Python-native, flexible, but not cross-compatible. Requires dependency metadata.
+
+### Reproducibility Ingredients
+
+- Version pointer to build pipeline code
+- Versioned datasets and splits
+- Performance record on test set
+
+### Monitoring Prerequisite
+
+- Save data profiles (input/output expectations) in the model package
+
+---
+
+## Serving Modes
+
+Model serving delivers predictions as a service. Modes depend on latency and trigger type.
+
+### Batch Prediction (Offline)
+
+- Scheduled runs on large datasets
+- Simple to implement
+- Use case: monthly sales forecasts
+
+### On-Demand Prediction (Online)
+
+- Triggered by user or event
+- Latency-sensitive
+
+#### Variants
+
+- **Near-Real-Time**: Acceptable delay (stream processing)
+- **Real-Time**: Sub-second latency required (e.g., fraud detection)
+- **Edge Deployment**: Model runs on user device to minimize latency
+
+---
+
+## Building the API
+
+Expose the model via an API for client applications.
+
+### Architecture
+
+- **Server**: Hosts the model
+- **Client**: Sends requests and receives predictions
+
+### Input Validation
+
+- Check required fields and types
+- Define a request model for documentation
+
+### Output Validation
+
+- Validate model outputs before sending
+- Define a response model to prevent crashes
+
+### Authentication and Throttling
+
+- Restrict access to authorized clients
+- Limit request rate per client
+
+### Recommended Framework
+
+- **FastAPI**: Python-based, fast, and feature-rich
+
+---
+
+## Deployment Progression and Testing
+
+Before production deployment, test the full ML application.
+
+### Environments
+
+- **Development**: Experimental coding
+- **Test**: Unit testing
+- **Staging**: Integration, smoke, and load testing
+- **Production**: Live service
+
+### Testing Types
+
+- **Unit Testing**: Individual functions
+- **Integration Testing**: Component interaction
+- **Smoke Testing**: Basic startup validation
+- **Load Testing**: Performance under expected load
+- **Stress Testing**: Extreme load scenarios
+- **UAT**: Final user validation
+
+### Prioritization
+
+- Focus on critical components
+- Avoid exhaustive edge-case testing
+
+---
+
+## Model Deployment Strategies
+
+Strategies for updating models in production:
+
+### Offline Deployment
+
+- Safe for batch systems
+- Swap models between runs
+
+### Blue/Green Deployment
+
+- Load both models
+- Switch traffic instantly
+- Easy rollback
+
+### Canary Deployment
+
+- Gradual traffic shift
+- Monitor performance before full rollout
+
+### Shadow Deployment
+
+- Run both models in parallel
+- Only old model serves responses
+- New model used for validation
+
+---
+
+## Monitoring ML Services
+
+Track both system health and prediction quality.
+
+### Health Indicators
+
+- Uptime
+- Request volume
+- Latency
+
+### Concept Drift
+
+- Change in input-output relationships
+- Model becomes outdated
+
+### Detection Methods
+
+- **Ground Truth Comparison**: Ideal but delayed
+- **Input Monitoring**: Detect covariate shift
+- **Output Monitoring**: Track output distribution changes
+
+---
+
+## Monitoring and Alerting
+
+Focus on internal failures: bugs, data errors, infrastructure issues.
+
+### Key Components
+
+- Granular logging
+- Data pipeline validation
+- Data profiles and expectations
+
+### Alerting Strategy
+
+- Avoid alert fatigue
+- Prioritize actionable alerts
+- Ensure timely notification
+
+### Incident Tracking
+
+- Log root cause and resolution
+- Use historical data to improve reliability
+
+### Centralized Monitoring
+
+- Independent service
+- Unified view across ML systems
+
+---
+
+## Model Maintenance: Data-Centric vs Model-Centric
+
+### Model-Centric Approach
+
+- Optimize algorithms and features
+- Common in competitions
+
+### Data-Centric Approach
+
+- Improve data quality and labeling
+- More effective in real-world systems
+
+### Labeling Tools
+
+- Interfaces for efficient annotation
+- Prioritize high-impact samples
+- Detect errors
+
+### Human-in-the-Loop Systems
+
+- ML predicts with confidence
+- Low-confidence cases sent to human
+- Human decisions used for retraining
+
+### Experiment Tracking
+
+- Use metadata stores (e.g., MLFlow)
+- Avoid redundant experiments
+- Document model selection journey
+
+---
+
+## Model Governance
+
+Structured oversight of ML models across their lifecycle.
+
+### Importance
+
+- Prevent reckless deployment
+- Mitigate financial and reputational risk
+
+### Lifecycle Coverage
+
+- **Design**: Ethics, privacy, bias
+- **Development**: Documentation, reproducibility
+- **Pre-Production**: Security, monitoring, audit readiness
+
+### Regulatory Context
+
+- Self-governance in low-risk domains
+- Strict compliance in regulated sectors
+
+### Risk Categories
+
+| Risk Level | Example Use Case |
+|------------|------------------|
+| Low        | Product recommendations |
+| Medium     | Churn prediction |
+| High       | Credit scoring, AML detection |
+
+### Final Note
+
+Governance adds friction but prevents chaos. Mature MLOps frameworks reveal its long-term value.
+
