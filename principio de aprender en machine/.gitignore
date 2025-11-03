@@ -26,4 +26,4 @@ jupyterenv/
 mlruns/
 /animal_clf_dataset
 
-/.ipynb_checkpoints
+.ipynb_checkpoints/
