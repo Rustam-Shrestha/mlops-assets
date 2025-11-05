@@ -1,0 +1,19 @@
+mkdir C:\media\br1\BRCAS\facilities
+
+
+CREATE TABLE IF NOT EXISTS service_requests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    ticketNumber TEXT,
+    date TEXT,
+    time TEXT,
+    address TEXT,
+    issuesOn TEXT,
+    issueDescription TEXT,
+    priority TEXT,
+    contactName TEXT,
+    contactPhone TEXT,
+    contactEmail TEXT
+);
+
+
+

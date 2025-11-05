@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Service Request Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <h1>BR Compliance and Service</h1>
+        <h2>Your Trust is Our Goal</h2>
+        <h3>Service Request Form</h3>
+
+        <!-- Form -->
+        <form id="serviceForm">
+            <!-- Facility ID -->
+            <label for="facilityId">Facility ID</label>
+            <input type="number" id="facilityId" name="facilityId" placeholder="Enter Facility ID" required>
+
+            <!-- Date -->
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" required>
+
+            <!-- Time -->
+            <label for="time">Time</label>
+            <input type="time" id="time" name="time" required>
+
+            <!-- Address -->
+            <label for="address">Address</label>
+            <input type="text" id="address" name="address" placeholder="Enter Address" required>
+
+            <!-- Issues On -->
+            <label for="issuesOn">Issues On</label>
+            <input type="text" id="issuesOn" name="issuesOn" placeholder="Enter Issue Title" required>
+
+            <!-- Issue Description -->
+            <label for="issueDescription">Issue Description</label>
+            <textarea id="issueDescription" name="issueDescription" rows="5" placeholder="Describe the issue..." required></textarea>
+
+            <!-- Priority Level -->
+            <label for="priority">Priority Level</label>
+            <select id="priority" name="priority" required>
+                <option value="" disabled selected>Select Priority</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Urgent">Urgent (After-hours charge will be applied)</option>
+            </select>
+
+            <!-- Contact Info -->
+            <label for="contactName">Contact Name</label>
+            <input type="text" id="contactName" name="contactName" placeholder="Enter Your Name" required>
+
+            <label for="contactPhone">Contact Phone</label>
+            <input type="tel" id="contactPhone" name="contactPhone" placeholder="Enter Phone Number" required>
+
+            <label for="contactEmail">Contact Email</label>
+            <input type="email" id="contactEmail" name="contactEmail" placeholder="Enter Email" required>
+
+            <button type="submit">Submit Request</button>
+        </form>
+
+        <!-- Success/Error Message -->
+        <div id="responseMessage"></div>
+    </div>
+
+    <script>
+
+document.getElementById('date').valueAsDate = new Date();
+const now = new Date();
+document.getElementById('time').value = now.toTimeString().slice(0,5);
+
+const form = document.getElementById('serviceForm');
+const responseMessage = document.getElementById('responseMessage');
+
+form.addEventListener('submit', async function(e) {
+  e.preventDefault();
+
+  const formData = Object.fromEntries(new FormData(form).entries());
+
+  try {
+    const res = await fetch('/submit-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    });
+
+    const result = await res.json();
+    if (result.success) {
+      responseMessage.textContent = `✅ Request saved! Ticket ID: ${result.ticketNumber}`;
+      responseMessage.style.color = 'green';
+      form.reset();
+    } else {
+      responseMessage.textContent = '❌ Failed to save request.';
+      responseMessage.style.color = 'red';
+    }
+  } catch (error) {
+    responseMessage.textContent = '⚠️ Error connecting to server.';
+    responseMessage.style.color = 'orange';
+  }
+});
+</script>
+
+    </script>
+</body>
+</html>
