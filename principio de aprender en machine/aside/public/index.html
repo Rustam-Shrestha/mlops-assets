@@ -6,8 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Service Request Form</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+      *{
+        margin: 0;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;      
+      }
+    </style>
 </head>
 <body>
+  <nav style="background:#007BFF; padding:10px; border-radius:5px;">
+  <a href="/" 
+     style="color:white; margin-right:15px; text-decoration:none; font-weight:bold;">
+     Home
+  </a>
+  <a href="/dashboard" 
+     style="color:white; text-decoration:none; font-weight:bold;">
+     Dashboard
+  </a>
+</nav>
+
     <div class="container">
         <!-- Header -->
         <h1>BR Compliance and Service</h1>
@@ -82,7 +102,7 @@ form.addEventListener('submit', async function(e) {
   const formData = Object.fromEntries(new FormData(form).entries());
 
   try {
-    const res = await fetch('/submit-form', {
+    const res = await fetch('/req-submit', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(formData)

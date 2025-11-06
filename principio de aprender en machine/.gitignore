@@ -27,3 +27,5 @@ mlruns/
 /animal_clf_dataset
 
 .ipynb_checkpoints/
+
+node_modules/
