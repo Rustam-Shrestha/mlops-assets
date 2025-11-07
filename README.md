@@ -1614,3 +1614,70 @@ rustam-submission-strategy
 - Out-of-fold target encoding → prevent leakage
 - Smoothing with global mean + alpha → stabilize rare categories
 - Unseen categories → fill with global mean
+
+
+
+
+🧠 NYC Taxi Fare Prediction – Learning Summary
+This repository documents the foundational concepts and modeling techniques explored while working on the NYC Taxi Fare Prediction task. It includes preprocessing strategies, baseline modeling, validation, feature engineering, hyperparameter tuning, and ensembling.
+
+📊 Data Preprocessing
+Identified and handled missing data using mean, median, or constant values for numerical features.
+
+For categorical features, used either the most frequent category or introduced a new category to preserve missingness information.
+
+Used pandas methods like .isnull() and .sum() to detect missing values.
+
+🧮 Baseline Modeling
+Built simple models to validate the pipeline and generate initial submissions:
+
+Global mean prediction for all test rows.
+
+Grouped mean prediction based on passenger count.
+
+Gradient Boosting model using raw numeric features.
+
+🧪 Validation Strategy
+Used a 30% holdout split from the training data for local validation.
+
+Compared local RMSE with Public Leaderboard scores to assess correlation.
+
+Learned that consistent improvement in local validation often reflects positively on the leaderboard.
+
+🏗️ Feature Engineering
+Extracted hour from pickup_datetime to capture temporal patterns.
+
+Planned further features like ride distance and location-based signals.
+
+Observed leaderboard improvements with each new feature added.
+
+📐 Hyperparameter Tuning
+Studied the concept of hyperparameters and their role in model performance.
+
+Explored Ridge regression as an example, where the alpha parameter controls regularization.
+
+Learned about tuning strategies:
+
+Grid Search
+
+Random Search
+
+Bayesian Optimization
+
+Focused on Grid Search for manually evaluating discrete parameter values.
+
+🔗 Model Ensembling
+Learned two ensemble strategies:
+
+Blending: Averaging predictions from multiple models.
+
+Stacking: Using predictions from base models as features for a second-level meta-model.
+
+Understood that top competition solutions often rely on ensembles rather than single models.
+
+📤 Submission Strategy
+Generated submission files from model predictions on the test set.
+
+Recognized that test labels are hidden, so leaderboard feedback is essential.
+
+Learned to submit strategically due to daily submission limits.
