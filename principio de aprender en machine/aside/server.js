@@ -33,7 +33,8 @@ db.run(`
     priority TEXT,
     contactName TEXT,
     contactPhone TEXT,
-    contactEmail TEXT
+    contactEmail TEXT,
+    storeName TEXT
   )
 `);
 
@@ -70,7 +71,8 @@ const facilityDBPath = `C:/media/br1/BRCAS/facilities/facility_${facilityId}.db`
       priority TEXT,
       contactName TEXT,
       contactPhone TEXT,
-      contactEmail TEXT
+      contactEmail TEXT, 
+      storeName TEXT
     )
   `);
 
@@ -81,16 +83,16 @@ const facilityDBPath = `C:/media/br1/BRCAS/facilities/facility_${facilityId}.db`
     const values = [
       ticketNumber, facilityId, data.date, data.time, data.address,
       data.issuesOn, data.issueDescription, data.priority,
-      data.contactName, data.contactPhone, data.contactEmail
+      data.contactName, data.contactPhone, data.contactEmail, data.storeName
     ];
 
     const insertSQL = `
        INSERT INTO requests (
     ticketNumber, facilityId, date, time, address,
     issuesOn, issueDescription, priority,
-    contactName, contactPhone, contactEmail
+    contactName, contactPhone, contactEmail, storeName
   )
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     `;
 
     db.run(insertSQL, values, (err) => {
@@ -101,13 +103,13 @@ const facilityDBPath = `C:/media/br1/BRCAS/facilities/facility_${facilityId}.db`
          INSERT INTO requests (
     ticketNumber, facilityId, date, time, address,
     issuesOn, issueDescription, priority,
-    contactName, contactPhone, contactEmail
+    contactName, contactPhone, contactEmail, storeName
   )
-  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
       `, [
         ticketNumber, data.date, data.time, data.address,
         data.issuesOn, data.issueDescription, data.priority,
-        data.contactName, data.contactPhone, data.contactEmail
+        data.contactName, data.contactPhone, data.contactEmail, data.storeName
       ], (facilityErr) => {
         if (facilityErr) console.error('Facility DB insert error:', facilityErr.message);
       });

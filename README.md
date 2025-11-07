@@ -1563,3 +1563,54 @@ rustam-forecasting-lab
 rustam-regression-playbook
 
 rustam-submission-strategy
+
+
+
+
+# Learning Notes – Concept Recall
+
+## Exploratory Data Analysis (EDA)
+- Train/test size → resource needs, model choice
+- Target variable imbalance/skew → check distributions
+- Feature properties → dependencies, peculiarities
+- Generate hypotheses for feature engineering
+- Basic stats: `describe()`, `value_counts()`
+- Plots: median price vs interest_level → cheaper listings → higher interest
+- New feature idea: price per bedroom
+
+## Haversine Distance
+- Formula for great-circle distance between lat/lon
+- Feature: ride distance (pickup vs dropoff)
+- Scatterplot: fare vs distance → correlation, anomalies, feature engineering
+
+## Temporal Patterns
+- Median fare by hour → peaks early morning, stable daytime
+- Hour as predictive feature for demand/pricing
+
+## Validation Strategies
+- Local validation → proxy for private test
+- Holdout set → simple but risk of overfitting
+- K-Fold CV → multiple train/test splits, robust estimate
+- Stratified K-Fold → preserves class distribution
+- TimeSeriesSplit → train on past, validate on future
+- Validation pipeline → train, predict, metric per fold → list of scores
+- Overall score → mean ± std → penalize unstable models
+
+## Data Leakage
+- Feature leakage → using unavailable info (e.g., future sales)
+- Validation leakage → wrong CV strategy (e.g., K-Fold on time series)
+- Guard against leakage → align validation with real-world scenario
+
+## Feature Engineering
+- Arithmetical features → ratios, sums (price per bedroom, total rooms)
+- Datetime features → year, month, week, day, dayofweek
+- Capture seasonality, cyclic behavior
+
+## Categorical Encoding
+- Label encoding → integers, works for trees, risky for linear models
+- One-hot encoding → binary columns, safe but dimensionality explosion
+- Binary features → encode as 0/1
+- Target encoding → mean target per category, powerful for high-cardinality
+- Out-of-fold target encoding → prevent leakage
+- Smoothing with global mean + alpha → stabilize rare categories
+- Unseen categories → fill with global mean

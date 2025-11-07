@@ -15,18 +15,21 @@
         margin-bottom: 20px;
       }
       table {
-        width: 100%;
+        width: 90%;
+        margin:0 auto;
         border-collapse: collapse;
         background: #fff;
         border-radius: 8px;
-        overflow: hidden;
+        border: 2px solid black
+        /* overflow: hidden; */
         
       }
       th,
       td {
         padding: 10px;
-        border-bottom: 1px solid #ccc;
+        /* border-bottom: 1px solid #ccc; */
         text-align: left;
+        border: 2px solid #444;
       }
       th {
         background-color: #007bff;
@@ -67,6 +70,7 @@
       <thead>
         <tr>
           <th>Facility ID</th>
+          <th>Ticket No</th>
           <th>Store Name</th>
           <th>Address</th>
           <th>Issue On</th>
@@ -83,21 +87,19 @@
 
     <script>
       async function loadRequests() {
-        try {
-          const res = await fetch('/api/requests'); // Your server endpoint to return JSON of requests
-          const json_data = await res.json();
-          const tbody = document.getElementById('requestsTable').querySelector('tbody');
-          tbody.innerHTML = '';
-          // alert(JSON.stringify(data));
-          data=json_data.data
+      try {
+        const res = await fetch('/api/requests');
+        const json_data = await res.json();
+        const tbody = document.getElementById('requestsTable').querySelector('tbody');
+        tbody.innerHTML = '';
 
-
+        const data = json_data.data;
         data.forEach(req => {
           const tr = document.createElement('tr');
           tr.innerHTML = `
             <td>${req.facilityId}</td>
             <td>${req.ticketNumber}</td>
-            <td>${req.storeName || ''}</td>
+            <td>${req.storeName}</td>
             <td>${req.address}</td>
             <td>${req.issuesOn}</td>
             <td>${req.issueDescription}</td>
@@ -110,15 +112,10 @@
       } catch (err) {
         console.error('Failed to load requests:', err);
       }
+    }
 
-
-      }
-
-      // Load requests on page load
-      loadRequests();
-
-      // Optional: refresh every 30 seconds
-      setInterval(loadRequests, 30000);
+    loadRequests();
+    setInterval(loadRequests, 30000);
     </script>
   </body>
 </html>
